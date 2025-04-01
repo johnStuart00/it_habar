@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:it_habar/core/assets/app_icons.dart';
 import 'package:it_habar/core/widgets/icon_widget.dart';
-import 'package:it_habar/core/widgets/text_widgets/logo_text_widget.dart';
 
 class AppBarField extends StatelessWidget {
   final Widget onSegmentTap;
@@ -20,10 +19,6 @@ class AppBarField extends StatelessWidget {
     return Row(
       children: [
         onSegmentTap,
-        SizedBox(width: 50),
-        Expanded(
-          child: LogoTextWidget(),
-        ),
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,

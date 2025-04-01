@@ -23,16 +23,28 @@ class AppThemes {
         color: AppColors.white,
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppColors.white, // Background color for search bar
+      hintStyle: TextStyle(color: AppColors.grey), // Hint text color
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(color: AppColors.grey), // Border color
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: AppColors.appColor,
+          width: 2,
+        ), // Focused border
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(color: AppColors.grey), // Default border
+      ),
+      prefixIconColor: AppColors.grey, // Icon color
+    ),
     textTheme: TextTheme(
-      displayLarge: GoogleFonts.ebGaramond(
-        fontSize: 24,
-        color: AppColors.appColor,
-        fontWeight: FontWeight.bold,
-      ),
-      displayMedium: GoogleFonts.ebGaramond(
-        fontSize: 24,
-        color: AppColors.appColor,
-      ),
       bodyLarge: GoogleFonts.ebGaramond(
         fontSize: 20,
         color: AppColors.black,
