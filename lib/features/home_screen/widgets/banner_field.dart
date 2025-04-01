@@ -116,7 +116,7 @@ class _BannerWidgetState extends State<BannerWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Theme.of(context).cardTheme.color,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: EntrySmallTextWidget(text: category),

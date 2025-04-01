@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class IconWidget extends StatelessWidget {
-  final IconData icon;
+class DrawerIcon extends StatelessWidget {
+  final Widget widget;
   final VoidCallback? onTap;
-  const IconWidget({
+  const DrawerIcon({
     super.key,
-    required this.icon,
+    required this.widget,
     this.onTap,
   });
 
@@ -20,10 +20,7 @@ class IconWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.grey[300],
             borderRadius: BorderRadius.all(Radius.circular(50))),
-        child: Icon(
-          icon,
-          size: 22,
-        ),
+        child: widget,
       ),
     );
   }

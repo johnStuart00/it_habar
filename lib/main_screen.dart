@@ -20,9 +20,6 @@ class _MainScreenState extends State<MainScreen> {
     Text(
       'Notes',
     ),
-    Text(
-      'Profile',
-    ),
   ];
 
   @override
@@ -69,10 +66,6 @@ class _MainScreenState extends State<MainScreen> {
                 GButton(
                   icon: AppIcons.noted,
                   text: 'Noted',
-                ),
-                GButton(
-                  icon: AppIcons.profile,
-                  text: 'Profile',
                 ),
               ],
               selectedIndex: _selectedIndex,

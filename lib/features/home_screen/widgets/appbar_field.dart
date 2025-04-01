@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:it_habar/core/assets/app_icons.dart';
 import 'package:it_habar/core/widgets/icon_widget.dart';
+import 'package:it_habar/core/widgets/text_widgets/logo_text_widget.dart';
 
 class AppBarField extends StatelessWidget {
-  final VoidCallback onSegmentTap;
+  final Widget onSegmentTap;
   final VoidCallback onSearchTap;
   final VoidCallback onNotificationTap;
 
@@ -18,9 +19,10 @@ class AppBarField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconWidget(
-          icon: AppIcons.segment,
-          onTap: onSegmentTap,
+        onSegmentTap,
+        SizedBox(width: 50),
+        Expanded(
+          child: LogoTextWidget(),
         ),
         Expanded(
           child: Row(
