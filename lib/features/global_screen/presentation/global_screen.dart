@@ -6,7 +6,7 @@ import 'package:it_habar/core/widgets/text_widgets/small_text_widget.dart';
 import 'package:it_habar/features/drawer_screen/presentation/drawer_screen.dart';
 import 'package:it_habar/features/drawer_screen/widgets/drawer_icon.dart';
 import 'package:it_habar/features/global_screen/widgets/search_field_widget.dart';
-import 'package:it_habar/features/home_screen/widgets/appbar_field.dart';
+import 'package:it_habar/core/widgets/appbar_field.dart';
 
 class GlobalScreen extends StatefulWidget {
   const GlobalScreen({super.key});
@@ -26,12 +26,40 @@ class _GlobalScreenState extends State<GlobalScreen>
     _advancedDrawerController.showDrawer();
   }
 
+  List<String> imagePath = [
+    'assets/images/habar01.jpg',
+    'assets/images/habar02.jpg',
+    'assets/images/habar03.jpg',
+    'assets/images/habar04.jpg',
+    'assets/images/habar05.jpg',
+    'assets/images/habar06.jpg',
+  ];
+
   List<String> newsCategory = [
     'Sport',
     'Technology',
     'Economy',
     'Culture',
     'Sport',
+    'Technology',
+  ];
+
+  List<String> newsTitle = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  ];
+
+  List<String> newsTime = [
+    '2 hours ago',
+    '3 hours ago',
+    '4 hours ago',
+    '5 hours ago',
+    '6 hours ago',
+    '7 hours ago',
   ];
 
   @override
@@ -102,7 +130,7 @@ class _GlobalScreenState extends State<GlobalScreen>
                     },
                   ),
                 ),
-                onSearchTap: _showIndicator,
+                searchIcon: false,
                 onNotificationTap: _showIndicator,
               ),
             ),

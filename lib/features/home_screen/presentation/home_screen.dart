@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:it_habar/core/constants/app_dimentions.dart';
 import 'package:it_habar/core/widgets/news_container_widget.dart';
 import 'package:it_habar/core/widgets/text_widgets/large_text_widget.dart';
 import 'package:it_habar/core/widgets/text_widgets/mark_text_widget.dart';
 import 'package:it_habar/features/drawer_screen/presentation/drawer_screen.dart';
 import 'package:it_habar/features/drawer_screen/widgets/drawer_icon.dart';
-import 'package:it_habar/features/home_screen/widgets/appbar_field.dart';
+import 'package:it_habar/core/widgets/appbar_field.dart';
 import 'package:it_habar/features/home_screen/widgets/banner_field.dart';
+import 'package:it_habar/data/data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,42 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   void _showIndicator() {}
-
-  List<String> imagePath = [
-    'assets/images/habar01.jpg',
-    'assets/images/habar02.jpg',
-    'assets/images/habar03.jpg',
-    'assets/images/habar04.jpg',
-    'assets/images/habar05.jpg',
-    'assets/images/habar06.jpg',
-  ];
-
-  List<String> newsCategory = [
-    'Sport',
-    'Technology',
-    'Economy',
-    'Culture',
-    'Sport',
-    'Technology',
-  ];
-
-  List<String> newsTitle = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-  ];
-
-  List<String> newsTime = [
-    '2 hours ago',
-    '3 hours ago',
-    '4 hours ago',
-    '5 hours ago',
-    '6 hours ago',
-    '7 hours ago',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
+                searchIcon: true,
                 onSearchTap: _showIndicator,
                 onNotificationTap: _showIndicator,
               ),
@@ -147,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     LargeTextWidget(text: 'Sizi gyzyklandyryp biler'),
                     MarkTextWidget(text: 'Hemmesi')
@@ -156,22 +123,48 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SliverToBoxAdapter(child: SizedBox(height: 10)),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return NewsContainerWidget(
-                      imagePath: imagePath[index],
-                      newsCategory: newsCategory[index],
-                      newsTitle: newsTitle[index],
-                      newsTime: newsTime[index],
-                    );
-                  },
-                  childCount: newsCategory.length,
-                ),
+            SliverToBoxAdapter(
+              child: FutureBuilder(
+                future: NewsService.loadNews(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    // ignore: avoid_print
+                    print("Error loading news: ${snapshot.error}");
+                    return Center(
+                        child: Text("Error loading news: ${snapshot.error}"));
+                  }
+                  if (!snapshot.hasData || snapshot.data == null) {
+                    return Center(child: Text("No news available"));
+                  }
+
+                  List<Map<String, dynamic>> newsData =
+                      snapshot.data as List<Map<String, dynamic>>;
+
+                  return Column(
+                    children: newsData.map((news) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 5.0,
+                        ),
+                        width: AppDimensions.screenWidth(context),
+                        child: NewsContainerWidget(
+                          imagePath: news['imagePath'],
+                          newsCategory: news['newsCategory'],
+                          newsTitle: news['newsTitle'],
+                          newsTime: news['newsTime'],
+                          notedValue: false,
+                          notedFunc: () {},
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
               ),
-            )
+            ),
             //main field end
           ],
         ),
@@ -180,8 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _handleMenuButtonPressed() {
-    // NOTICE: Manage Advanced Drawer state through the Controller.
-    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
     _advancedDrawerController.showDrawer();
   }
 }

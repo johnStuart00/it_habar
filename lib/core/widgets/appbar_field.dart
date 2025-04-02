@@ -4,12 +4,14 @@ import 'package:it_habar/core/widgets/icon_widget.dart';
 
 class AppBarField extends StatelessWidget {
   final Widget onSegmentTap;
-  final VoidCallback onSearchTap;
+  final bool searchIcon;
+  final VoidCallback? onSearchTap;
   final VoidCallback onNotificationTap;
 
   const AppBarField({
     required this.onSegmentTap,
-    required this.onSearchTap,
+    required this.searchIcon,
+    this.onSearchTap,
     required this.onNotificationTap,
     super.key,
   });
@@ -23,10 +25,12 @@ class AppBarField extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconWidget(
-                icon: AppIcons.search,
-                onTap: onSearchTap,
-              ),
+              searchIcon
+                  ? IconWidget(
+                      icon: AppIcons.search,
+                      onTap: onSearchTap,
+                    )
+                  : SizedBox(),
               SizedBox(width: 5),
               Stack(
                 children: [
