@@ -1,14 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:it_habar/core/constants/app_dimentions.dart';
 import 'package:it_habar/core/widgets/news_container_widget.dart';
 import 'package:it_habar/core/widgets/text_widgets/large_text_widget.dart';
 import 'package:it_habar/core/widgets/text_widgets/mark_text_widget.dart';
+import 'package:it_habar/domain/api_clients/api_client.dart';
 import 'package:it_habar/features/drawer_screen/presentation/drawer_screen.dart';
 import 'package:it_habar/features/drawer_screen/widgets/drawer_icon.dart';
 import 'package:it_habar/core/widgets/appbar_field.dart';
 import 'package:it_habar/features/home_screen/widgets/banner_field.dart';
-import 'package:it_habar/data/data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +22,30 @@ class _HomeScreenState extends State<HomeScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   void _showIndicator() {}
+
+  List<dynamic> news = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadNews();
+  }
+
+  Future<void> loadNews() async {
+    try {
+      final fetchedNews = await ApiClient.getNews();
+      setState(() {
+        news = fetchedNews;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,46 +149,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SliverToBoxAdapter(child: SizedBox(height: 10)),
             SliverToBoxAdapter(
-              child: FutureBuilder(
-                future: NewsService.loadNews(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    // ignore: avoid_print
-                    print("Error loading news: ${snapshot.error}");
-                    return Center(
-                        child: Text("Error loading news: ${snapshot.error}"));
-                  }
-                  if (!snapshot.hasData || snapshot.data == null) {
-                    return Center(child: Text("No news available"));
-                  }
-
-                  List<Map<String, dynamic>> newsData =
-                      snapshot.data as List<Map<String, dynamic>>;
-
-                  return Column(
-                    children: newsData.map((news) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10.0,
-                          vertical: 5.0,
-                        ),
-                        width: AppDimensions.screenWidth(context),
-                        child: NewsContainerWidget(
-                          imagePath: news['imagePath'],
-                          newsCategory: news['newsCategory'],
-                          newsTitle: news['newsTitle'],
-                          newsTime: news['newsTime'],
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: news.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final item = news[index];
+                        return NewsContainerWidget(
+                          imagePath: '',
+                          newsCategory: '',
+                          newsTitle: item['title'],
+                          newsTime: '',
                           notedValue: false,
                           notedFunc: () {},
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
+                        );
+                      },
+                    ),
             ),
             //main field end
           ],

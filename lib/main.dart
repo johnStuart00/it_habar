@@ -14,9 +14,8 @@ class ITHabarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppThemes.lightTheme,
-      home: MainScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: AppThemes.lightTheme,
+        home: MainScreen());
   }
 }
