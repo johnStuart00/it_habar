@@ -1,16 +1,46 @@
-# it_habar2
+# 📰 Flutter News App
 
-A new Flutter project.
+A sleek and modern mobile application for reading the latest news from around the world. Stay informed, personalize your experience, and never miss an update on topics you care about.
 
-## Getting Started
+## 🚀 Overview
 
-This project is a starting point for a Flutter application.
+This News App is designed with elegance and simplicity in mind, offering personalized news reading experiences. Users can explore trending articles, favorite the ones they love, choose preferred categories, and customize app settings for a fully tailored experience.
 
-A few resources to get you started if this is your first Flutter project:
+## 🌟 Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🔖 **Favorites**  
+  Mark any article as a favorite and access them anytime from your profile.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 🗂️ **Category Preferences**  
+  Choose your favorite news categories (e.g., Sports, Technology, Politics) to get content that matters to you.
+
+- ⚙️ **User Settings**  
+  Adjust language, theme (light/dark), and other preferences directly in the app.
+
+- 📰 **Top Headlines**  
+  Get real-time access to the latest and most relevant global headlines.
+
+- 🔎 **Smart Search**  
+  Quickly find articles based on keywords, topics, or categories.
+
+- 🌐 **Multi-Language Support**  
+  Use the app in your preferred language.
+
+- 🌗 **Light and Dark Theme**  
+  Seamless switching between light and dark modes to suit your mood or environment.
+
+## 🛠️ Tech Stack
+
+- **Flutter** – For cross-platform development  
+- **Dart** – Main programming language  
+- **REST API** – To fetch live news content  
+- **Shared Preferences** – For storing favorites and user settings  
+- **Provider/GetX** – For state management (depending on what you're using)
+
+## 📲 Installation
+
+```bash
+git clone https://github.com/focusdev2024/it_habar.git
+cd flutter-news-app
+flutter pub get
+flutter run
